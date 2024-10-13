@@ -8,6 +8,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
+import Image from "next/image";
 
 export default function LoginModal() {
   return (
@@ -23,6 +24,16 @@ export default function LoginModal() {
             conversations in second.s
           </DialogDescription>
         </DialogHeader>
+        <Button variant={"outline"}>
+          <Image
+            src={"/images/google.png"}
+            className="mr-4"
+            width={25}
+            height={25}
+            alt="google-logo"
+          />
+          Continue with google
+        </Button>
       </DialogContent>
     </Dialog>
   );
