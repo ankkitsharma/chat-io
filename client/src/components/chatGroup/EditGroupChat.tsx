@@ -59,13 +59,13 @@ export default function EditGroupChat({
           headers: {
             Authorization: user.token,
           },
-        }
+        },
       );
 
       if (data?.message) {
         setOpen(false);
         toast.success(data?.message);
-        clearCache("dashboard");
+        await clearCache("dashboard");
       }
       setLoading(false);
     } catch (error) {

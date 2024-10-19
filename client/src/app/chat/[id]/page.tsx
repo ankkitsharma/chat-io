@@ -1,5 +1,5 @@
 import ChatBase from "@/components/chat/ChatBase";
-import { fetchChatGroup } from "@/fetch/groupFetch";
+import { fetchChatGroup, fetchChatUsers } from "@/fetch/groupFetch";
 import { notFound } from "next/navigation";
 import { validate as isValidUUID } from "uuid";
 
@@ -13,10 +13,11 @@ export default async function Chat({ params }: { params: { id: string } }) {
     return notFound();
   }
 
+  const users: Array<GroupChatUserType> | [] = await fetchChatUsers(params.id);
+
   return (
     <div>
-      <h1>Hello I am chat</h1>
-      <ChatBase groupId={params.id} />
+      <ChatBase users={users} group={group} />
     </div>
   );
 }

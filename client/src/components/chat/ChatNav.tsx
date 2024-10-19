@@ -6,7 +6,7 @@ export default function ChatNav({
   users,
   user,
 }: {
-  chatGroup: GroupChatType;
+  chatGroup: ChatGroupType;
   users: Array<GroupChatUserType> | [];
   user?: GroupChatUserType;
 }) {
