@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npx tsc",
-    "start": "node --env-file=.env ./dist/index.js",
+    "start": "node --watch --env-file=.env ./dist/index.js",
     "postinstall": "prisma generate"
   },
   "type": "module",

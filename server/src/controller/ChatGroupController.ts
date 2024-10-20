@@ -13,16 +13,10 @@ const ChatGroupController = {
           created_at: "desc",
         },
       });
-      if (groups.length > 0) {
-        res.status(200).json({
-          message: "Chat Groups fetched successfully",
-          data: groups,
-        });
-      } else {
-        res.status(404).json({
-          message: "No groups found",
-        });
-      }
+      res.status(200).json({
+        message: "Chat Groups fetched successfully",
+        data: groups,
+      });
       return;
     } catch (error) {
       next(error);
