@@ -18,10 +18,8 @@ It leverages `socket.io` for real-time communication and `prisma` for database i
 ## Table of Contents
 
 - [Installation](#installation)
-- [Usage](#usage)
 - [API Endpoints](#api-endpoints)
-- [Socket Events](#socket-events)
-- [License](#license)
+- [Roadmap](#Roadmap)
 
 ## Installation
 
