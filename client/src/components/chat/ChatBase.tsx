@@ -6,32 +6,28 @@ import { Button } from "../ui/button";
 import ChatSidebar from "@/components/chat/ChatSidebar";
 import ChatNav from "@/components/chat/ChatNav";
 import ChatUserDialog from "@/components/chat/ChatUserDialog";
+import Chats from "@/components/chat/Chats";
 
 export default function ChatBase({
   group,
   users,
+  oldMessages,
 }: {
   group: ChatGroupType;
   users: Array<GroupChatUserType>;
+  oldMessages: Array<MessageType> | [];
 }) {
-  // let socket = useMemo(() => {
-  //   const socket = getSocket();
-  //   socket.auth = {
-  //     room: groupId,
-  //   };
-  //   return socket.connect();
-  // }, []);
-  //
-  // useEffect(() => {
-  //   socket.on("message", (data: any) => {
-  //     console.log("The socket message is ", data);
-  //   });
-  //   return () => {
-  //     socket.close();
-  //   };
-  // }, []);
-
   const [open, setOpen] = useState(true);
+  const [chatUser, setChatUser] = useState<GroupChatUserType>();
+
+  useEffect(() => {
+    const data = localStorage.getItem(group.id);
+
+    if (data) {
+      const pData = JSON.parse(data);
+      setChatUser(pData);
+    }
+  }, [group.id]);
 
   return (
     <div className={"flex"}>
@@ -42,6 +38,8 @@ export default function ChatBase({
         ) : (
           <ChatNav chatGroup={group} users={users} />
         )}
+
+        <Chats group={group} oldMessages={oldMessages} chatUser={chatUser} />
       </div>
     </div>
   );

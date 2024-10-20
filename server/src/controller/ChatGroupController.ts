@@ -25,10 +25,6 @@ const ChatGroupController = {
       }
       return;
     } catch (error) {
-      res.status(500).json({
-        message:
-          "Something went wrong while fetching chat groups. plase try again",
-      });
       next(error);
     }
   },
@@ -53,10 +49,6 @@ const ChatGroupController = {
       }
       return;
     } catch (error) {
-      res.status(500).json({
-        message:
-          "Something went wrong while fetching chat group. plase try again",
-      });
       next(error);
     }
   },
@@ -74,10 +66,6 @@ const ChatGroupController = {
       res.status(201).json({ message: "Chat Group created successfully!" });
       return;
     } catch (error) {
-      res.status(500).json({
-        message:
-          "Something went wrong while creating chat group. plase try again",
-      });
       next(error);
     }
   },
@@ -97,10 +85,6 @@ const ChatGroupController = {
       res.status(201).json({ message: "Chat Group updated successfully!" });
       return;
     } catch (error) {
-      res.status(500).json({
-        message:
-          "Something went wrong while updating chat group. plase try again",
-      });
       next(error);
     }
   },
@@ -118,10 +102,6 @@ const ChatGroupController = {
       });
       return;
     } catch (error) {
-      res.status(500).json({
-        message:
-          "Something went wrong while fetching chat group. plase try again",
-      });
       next(error);
     }
   },

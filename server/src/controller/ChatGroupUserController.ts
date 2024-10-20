@@ -24,9 +24,6 @@ const ChatGroupUserController = {
       }
       return;
     } catch (error) {
-      res
-        .status(500)
-        .json({ message: "Something went wrong. please try again!" });
       next(error);
     }
   },
@@ -39,9 +36,6 @@ const ChatGroupUserController = {
       res.status(201).json({ message: "User added successfully!", data: user });
       return;
     } catch (error) {
-      res
-        .status(500)
-        .json({ message: "Something went wrong. please try again!" });
       next(error);
     }
   },
