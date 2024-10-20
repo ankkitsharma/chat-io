@@ -42,4 +42,4 @@ app.use("/api", Routes);
 server.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
 
 export { io };
-export default server;
+export default app;
