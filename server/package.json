@@ -4,7 +4,6 @@
   "main": "index.js",
   "scripts": {
     "build": "npx tsc",
-    "vercel-build": "echo hello",
     "start": "node --env-file=.env ./dist/index.js"
   },
   "type": "module",
