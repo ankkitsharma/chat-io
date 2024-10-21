@@ -1,5 +1,5 @@
 
-# Chat Application
+# ChatIO
 
 This project is a scalable realtime chat application built using SockeIO, Redis, TypeScript, Express, Nextjs, and Prisma. 
 It leverages `socket.io` for real-time communication and `prisma` for database interactions and Redis for
