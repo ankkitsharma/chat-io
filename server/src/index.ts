@@ -14,7 +14,11 @@ import { instrument } from "@socket.io/admin-ui";
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:3000", "https://admin.socket.io"],
+    origin: [
+      "http://localhost:3000",
+      "https://chat-io-cl.vercel.app",
+      "https://admin.socket.io",
+    ],
     credentials: true,
   },
   // adapter: createAdapter(redis),
