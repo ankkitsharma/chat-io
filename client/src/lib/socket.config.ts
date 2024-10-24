@@ -5,7 +5,7 @@ let socket: Socket;
 
 function getSocket(): Socket {
   if (!socket) {
-    socket = io(Env.BACKEND_URL, { autoConnect: false });
+    socket = io(Env.BACKEND_URL, { autoConnect: false, withCredentials: true });
   }
   return socket;
 }
