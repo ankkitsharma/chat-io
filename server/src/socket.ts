@@ -29,6 +29,11 @@ function setupSocket(io: Server) {
       socket.to(socket.room!).emit("message", data);
     });
 
+    socket.on("user_joined", async (user) => {
+      console.log("The user joined", user);
+      socket.to(socket.room!).emit("user_joined", user);
+    });
+
     socket.on("disconnect", () => {
       console.log("A user disconnected...", socket.id);
     });

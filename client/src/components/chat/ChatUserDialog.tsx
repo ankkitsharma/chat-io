@@ -13,21 +13,36 @@ import { useParams } from "next/navigation";
 import axios from "axios";
 import { CHAT_GROUP_USERS_URL } from "@/lib/apiEndPoints";
 import { toast } from "sonner";
+import { getSocket } from "@/lib/socket.config";
+import { useMemo } from "react";
+
+interface Props {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  group: ChatGroupType;
+  onUserJoin: (user: GroupChatUserType) => void;
+}
 
 export default function ChatUserDialog({
   open,
   setOpen,
   group,
-}: {
-  open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
-  group: ChatGroupType;
-}) {
+  onUserJoin,
+}: Props) {
   const params = useParams();
   const [state, setState] = useState({
     name: "",
     passcode: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+
+  let socket = useMemo(() => {
+    const socket = getSocket();
+    socket.auth = {
+      room: group.id,
+    };
+    return socket.connect();
+  }, []);
 
   useEffect(() => {
     const data = localStorage.getItem(params["id"] as string);
@@ -44,16 +59,24 @@ export default function ChatUserDialog({
     const localData = localStorage.getItem(params["id"] as string);
     if (!localData) {
       try {
+        setIsLoading(true);
         const { data } = await axios.post(CHAT_GROUP_USERS_URL, {
           name: state.name,
           group_id: params["id"] as string,
         });
         localStorage.setItem(
           params["id"] as string,
-          JSON.stringify(data?.data),
+          JSON.stringify(data?.data)
         );
+
+        onUserJoin(data?.data);
+        socket.emit("user_joined", data?.data);
+        toast.success("Joined successfully");
+        setOpen(false);
       } catch (error) {
         toast.error("Something went wrong.please try again!");
+      } finally {
+        setIsLoading(false);
       }
     }
     if (group.passcode != state.passcode) {

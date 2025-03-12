@@ -10,7 +10,6 @@ export default async function page() {
   const groups: Array<ChatGroupType> | [] = await fetchChatGroups(
     session?.user?.token!
   );
-  console.log("The groups are ", groups);
   return (
     <div>
       <DashNav
