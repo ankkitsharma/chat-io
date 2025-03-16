@@ -15,21 +15,23 @@ import { CHAT_GROUP_USERS_URL } from "@/lib/apiEndPoints";
 import { toast } from "sonner";
 import { getSocket } from "@/lib/socket.config";
 import { useMemo } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   group: ChatGroupType;
-  onUserJoin: (user: GroupChatUserType) => void;
+  // onUserJoin: (user: GroupChatUserType) => void;
 }
 
 export default function ChatUserDialog({
   open,
   setOpen,
   group,
-  onUserJoin,
+  // onUserJoin,
 }: Props) {
   const params = useParams();
+  const queryClient = useQueryClient();
   const [state, setState] = useState({
     name: "",
     passcode: "",
@@ -69,7 +71,11 @@ export default function ChatUserDialog({
           JSON.stringify(data?.data)
         );
 
-        onUserJoin(data?.data);
+        // onUserJoin(data?.data);
+        setTimeout(() => {
+          queryClient.invalidateQueries({ queryKey: ["chatUsers", group.id] });
+          queryClient.invalidateQueries({ queryKey: ["chats", group.id] });
+        }, 300);
         socket.emit("user_joined", data?.data);
         toast.success("Joined successfully");
         setOpen(false);

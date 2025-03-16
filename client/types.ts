@@ -19,4 +19,5 @@ type MessageType = {
   name: string;
   message: string;
   created_at: string;
+  isSystemMessage?: boolean;
 };

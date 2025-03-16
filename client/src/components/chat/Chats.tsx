@@ -15,6 +15,12 @@ export default function Chats({
   const [messages, setMessages] = useState<Array<MessageType>>(oldMessages);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // This effect syncs the local messages state with the oldMessages prop
+  useEffect(() => {
+    setMessages(oldMessages);
+    scrollToBottom();
+  }, [oldMessages]);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -24,19 +30,40 @@ export default function Chats({
     socket.auth = {
       room: group.id,
     };
+
+    // Log socket id to verify it's consistent
+    console.log("Socket ID in Chats.tsx:", socket.id);
     return socket.connect();
-  }, []);
+  }, [group.id]);
+
   useEffect(() => {
+    // Listen for incoming messages
+    // Add debugging for socket connection status
+    console.log("Socket connected status in chats:", socket.connected);
     socket.on("message", (data: MessageType) => {
       console.log("The message is", data);
       setMessages((prevMessages) => [...prevMessages, data]);
       scrollToBottom();
     });
 
+    // For debugging, verify handlers are registered
+    console.log("Message handler registered");
+
+    // Cleanup all listeners when component unmounts or dependencies change
     return () => {
-      socket.close();
+      console.log("Cleaning up message listener");
+      socket.off("message");
+      socket.off("connect");
     };
-  }, []);
+  }, [socket]);
+
+  // Add a separate useEffect for socket cleanup on unmount
+  // useEffect(() => {
+  //   return () => {
+  //     socket.close();
+  //   };
+  // }, []);
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -47,6 +74,7 @@ export default function Chats({
       created_at: new Date().toISOString(),
       group_id: group.id,
     };
+    console.log("The payload is", payload);
     socket.emit("message", payload);
     setMessage("");
     setMessages([...messages, payload]);
@@ -61,11 +89,14 @@ export default function Chats({
             <div
               key={message.id}
               className={`max-w-sm rounded-lg p-2 ${
-                message.name === chatUser?.name
-                  ? "bg-gradient-to-r from-blue-400 to-blue-600  text-white self-end"
-                  : "bg-gradient-to-r from-gray-200 to-gray-300 text-black self-start"
+                message.isSystemMessage
+                  ? "bg-gray-100 text-gray-600 italic self-center text-sm"
+                  : message.name === chatUser?.name
+                    ? "bg-gradient-to-r from-blue-400 to-blue-600 text-white self-end"
+                    : "bg-gradient-to-r from-gray-200 to-gray-300 text-black self-start"
               }`}
             >
+              {!message.isSystemMessage && <div>{message.name}</div>}
               {message.message}
             </div>
           ))}

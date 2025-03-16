@@ -8,19 +8,21 @@ import ChatNav from "@/components/chat/ChatNav";
 import ChatUserDialog from "@/components/chat/ChatUserDialog";
 import Chats from "@/components/chat/Chats";
 import { getSocket } from "@/lib/socket.config";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function ChatBase({
   group,
-  users: initialUsers,
+  users,
   oldMessages,
 }: {
   group: ChatGroupType;
-  users: Array<GroupChatUserType>;
+  users: Array<GroupChatUserType> | [];
   oldMessages: Array<MessageType> | [];
 }) {
   const [open, setOpen] = useState(true);
   const [chatUser, setChatUser] = useState<GroupChatUserType>();
-  const [users, setUsers] = useState<Array<GroupChatUserType>>(initialUsers);
+  // const [users, setUsers] = useState<Array<GroupChatUserType>>(initialUsers);
+  const queryClient = useQueryClient();
 
   let socket = useMemo(() => {
     const socket = getSocket();
@@ -38,18 +40,23 @@ export default function ChatBase({
       setChatUser(pData);
       setOpen(false); // If we have user data, don't show the dialog
     }
-  }, [group.id]);
+  }, [group.id, users]);
 
   useEffect(() => {
     socket.on("user_joined", (newUser: GroupChatUserType) => {
       console.log("The user joined is", newUser);
-      setUsers((prevUsers) => {
-        const userExists = prevUsers.some((u) => u.id === newUser.id);
-        if (!userExists) {
-          return [...prevUsers, newUser];
-        }
-        return prevUsers;
-      });
+      // Add a small delay before refreshing queries
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ["chatUsers", group.id] });
+        queryClient.invalidateQueries({ queryKey: ["chats", group.id] });
+      }, 300);
+      // setUsers((prevUsers) => {
+      //   const userExists = prevUsers.some((u) => u.id === newUser.id);
+      //   if (!userExists) {
+      //     return [...prevUsers, newUser];
+      //   }
+      //   return prevUsers;
+      // });
     });
 
     return () => {
@@ -58,16 +65,16 @@ export default function ChatBase({
   }, [socket]);
 
   // Function to handle user join from dialog
-  const handleUserJoin = (user: GroupChatUserType) => {
-    setChatUser(user);
-    setUsers((prevUsers) => {
-      const userExists = prevUsers.some((u) => u.id === user.id);
-      if (!userExists) {
-        return [...prevUsers, user];
-      }
-      return prevUsers;
-    });
-  };
+  // const handleUserJoin = (user: GroupChatUserType) => {
+  //   setChatUser(user);
+  //   setUsers((prevUsers) => {
+  //     const userExists = prevUsers.some((u) => u.id === user.id);
+  //     if (!userExists) {
+  //       return [...prevUsers, user];
+  //     }
+  //     return prevUsers;
+  //   });
+  // };
 
   return (
     <div className={"flex"}>
@@ -78,13 +85,18 @@ export default function ChatBase({
             open={open}
             setOpen={setOpen}
             group={group}
-            onUserJoin={handleUserJoin}
+            // onUserJoin={handleUserJoin}
           />
         ) : (
           <ChatNav chatGroup={group} users={users} />
         )}
 
-        <Chats group={group} oldMessages={oldMessages} chatUser={chatUser} />
+        <Chats
+          group={group}
+          oldMessages={oldMessages}
+          chatUser={chatUser}
+          key={JSON.stringify(oldMessages)}
+        />
       </div>
     </div>
   );
