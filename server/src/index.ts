@@ -7,23 +7,49 @@ import Routes from "./routes/index.js";
 import { Server } from "socket.io";
 import { createServer } from "node:http";
 import { setupSocket } from "./socket.js";
-// import { createAdapter } from "@socket.io/redis-streams-adapter";
-// import redis from "./config/redis.config.js";
-import { instrument } from "@socket.io/admin-ui";
+import { createAdapter } from "@socket.io/redis-streams-adapter";
+import redis from "./config/redis.config.js";
+// import { instrument } from "@socket.io/admin-ui";
 
 const server = createServer(app);
-const io = new Server(server, {
+interface SocketOptions {
+  cors: {
+    origin: string[];
+    credentials: boolean;
+  };
+  adapter?: ReturnType<typeof createAdapter>;
+}
+const socketOptions: SocketOptions = {
   cors: {
     origin: ["https://chat-io-cl.vercel.app", "http://localhost:3000"],
     credentials: true,
   },
-  // adapter: createAdapter(redis),
+};
+
+redis.on("connect", () => {
+  console.log("Redis connected successfully");
 });
 
-instrument(io, {
-  auth: false,
-  mode: "development",
-});
+// redis.on("error", (err) => {
+//   console.error("Redis connection error:", err);
+// });
+
+// Try to use Redis adapter if Redis is available
+try {
+  socketOptions.adapter = createAdapter(redis);
+  console.log("Using Redis adapter for Socket.IO");
+} catch (error) {
+  console.error(
+    "Failed to create Redis adapter, falling back to in-memory adapter:",
+    error
+  );
+}
+const io = new Server(server, socketOptions);
+
+// instrument(io, {
+//   auth: false,
+//   mode: "development",
+// });
 
 setupSocket(io);
 
