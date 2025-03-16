@@ -57,13 +57,6 @@ export default function Chats({
     };
   }, [socket]);
 
-  // Add a separate useEffect for socket cleanup on unmount
-  // useEffect(() => {
-  //   return () => {
-  //     socket.close();
-  //   };
-  // }, []);
-
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 

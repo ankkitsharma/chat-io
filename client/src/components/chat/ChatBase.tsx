@@ -21,7 +21,7 @@ export default function ChatBase({
 }) {
   const [open, setOpen] = useState(true);
   const [chatUser, setChatUser] = useState<GroupChatUserType>();
-  // const [users, setUsers] = useState<Array<GroupChatUserType>>(initialUsers);
+
   const queryClient = useQueryClient();
 
   let socket = useMemo(() => {
@@ -50,13 +50,6 @@ export default function ChatBase({
         queryClient.invalidateQueries({ queryKey: ["chatUsers", group.id] });
         queryClient.invalidateQueries({ queryKey: ["chats", group.id] });
       }, 300);
-      // setUsers((prevUsers) => {
-      //   const userExists = prevUsers.some((u) => u.id === newUser.id);
-      //   if (!userExists) {
-      //     return [...prevUsers, newUser];
-      //   }
-      //   return prevUsers;
-      // });
     });
 
     return () => {
@@ -64,29 +57,12 @@ export default function ChatBase({
     };
   }, [socket]);
 
-  // Function to handle user join from dialog
-  // const handleUserJoin = (user: GroupChatUserType) => {
-  //   setChatUser(user);
-  //   setUsers((prevUsers) => {
-  //     const userExists = prevUsers.some((u) => u.id === user.id);
-  //     if (!userExists) {
-  //       return [...prevUsers, user];
-  //     }
-  //     return prevUsers;
-  //   });
-  // };
-
   return (
     <div className={"flex"}>
       <ChatSidebar users={users} />
       <div className={"w-full md:w-4/5 bg-gradient-to-b from-gray-50 to-white"}>
         {open ? (
-          <ChatUserDialog
-            open={open}
-            setOpen={setOpen}
-            group={group}
-            // onUserJoin={handleUserJoin}
-          />
+          <ChatUserDialog open={open} setOpen={setOpen} group={group} />
         ) : (
           <ChatNav chatGroup={group} users={users} />
         )}

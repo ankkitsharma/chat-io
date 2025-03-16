@@ -21,15 +21,9 @@ interface Props {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   group: ChatGroupType;
-  // onUserJoin: (user: GroupChatUserType) => void;
 }
 
-export default function ChatUserDialog({
-  open,
-  setOpen,
-  group,
-  // onUserJoin,
-}: Props) {
+export default function ChatUserDialog({ open, setOpen, group }: Props) {
   const params = useParams();
   const queryClient = useQueryClient();
   const [state, setState] = useState({
