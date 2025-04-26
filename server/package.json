@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx src/index.ts",
+    "dev": "tsx --env-file=.env src/index.ts",
     "start": "tsx src/index.ts",
     "build": "prisma generate",
     "migrate:dev": "prisma migrate dev",

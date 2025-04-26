@@ -41,7 +41,7 @@ try {
 } catch (error) {
   console.error(
     "Failed to create Redis adapter, falling back to in-memory adapter:",
-    error
+    error,
   );
 }
 const io = new Server(server, socketOptions);

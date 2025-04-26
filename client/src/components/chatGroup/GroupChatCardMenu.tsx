@@ -26,7 +26,8 @@ export default function GroupChatCardMenu({
 
   const handleCopy = () => {
     navigator.clipboard?.writeText(`${Env.APP_URL}/chat/${group.id}`);
-    toast.success("Link copied successfully!");
+    console.log(`${Env.APP_URL}/chat/${group.id}`);
+    toast.success(`Link copied successfully! ${Env.APP_URL}/chat/${group.id}`);
   };
 
   return (
