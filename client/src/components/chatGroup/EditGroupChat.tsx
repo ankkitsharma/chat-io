@@ -20,6 +20,7 @@ import axios, { AxiosError } from "axios";
 import { CHAT_GROUP_URL } from "@/lib/apiEndPoints";
 import { toast } from "sonner";
 import { clearCache } from "@/actions/common";
+import { ChatGroupType } from "../../../types";
 
 export default function EditGroupChat({
   user,
@@ -59,7 +60,7 @@ export default function EditGroupChat({
           headers: {
             Authorization: user.token,
           },
-        },
+        }
       );
 
       if (data?.message) {
