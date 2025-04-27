@@ -21,7 +21,11 @@ interface SocketOptions {
 }
 const socketOptions: SocketOptions = {
   cors: {
-    origin: ["http://digi.ankitsh.cc:3000", "http://localhost:3000"],
+    origin: [
+      "http://digi.ankitsh.cc:3000",
+      "http://localhost:3000",
+      "https://chatio.ankitsh.cc",
+    ],
     credentials: true,
   },
 };
@@ -41,7 +45,7 @@ try {
 } catch (error) {
   console.error(
     "Failed to create Redis adapter, falling back to in-memory adapter:",
-    error,
+    error
   );
 }
 const io = new Server(server, socketOptions);
