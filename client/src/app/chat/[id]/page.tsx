@@ -6,11 +6,7 @@ import { validate as isValidUUID } from "uuid";
 import { fetchChats } from "@/fetch/chatsFetch";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react"; // Add this import if you don't have a loader component
-import {
-  ChatGroupType,
-  GroupChatUserType,
-  MessageType,
-} from "../../../../types";
+import { ChatGroupType, GroupChatUserType, MessageType } from "@/types";
 
 export default function Chat({ params }: { params: { id: string } }) {
   if (!isValidUUID(params.id)) {

@@ -16,7 +16,7 @@ import { toast } from "sonner";
 import { getSocket } from "@/lib/socket.config";
 import { useMemo } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { ChatGroupType } from "../../../types";
+import { ChatGroupType } from "@/types";
 
 interface Props {
   open: boolean;

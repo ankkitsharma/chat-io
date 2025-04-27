@@ -3,7 +3,7 @@ import MobileChatSidebar from "./MobileChatSidebar";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { CircleArrowLeft } from "lucide-react";
-import { GroupChatUserType, ChatGroupType } from "../../../types";
+import { GroupChatUserType, ChatGroupType } from "@/types";
 
 export default function ChatNav({
   chatGroup,

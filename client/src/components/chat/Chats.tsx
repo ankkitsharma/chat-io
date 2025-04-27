@@ -3,7 +3,7 @@ import { getSocket } from "@/lib/socket.config";
 import { Input } from "../ui/input";
 import { v4 as uuidv4 } from "uuid";
 import { Button } from "../ui/button";
-import { ChatGroupType, MessageType, GroupChatUserType } from "../../../types";
+import { ChatGroupType, MessageType, GroupChatUserType } from "@/types";
 export default function Chats({
   group,
   oldMessages,

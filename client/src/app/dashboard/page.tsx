@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 import CreateChat from "@/components/chatGroup/CreateChat";
 import { fetchChatGroups } from "@/fetch/groupFetch";
 import GroupChatCard from "@/components/chatGroup/GroupChatCard";
-import { ChatGroupType } from "../../../types";
+import { ChatGroupType } from "@/types";
 
 export default async function page() {
   const session: CustomSession | null = await getServerSession(authOptions);

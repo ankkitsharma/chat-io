@@ -9,7 +9,7 @@ import ChatUserDialog from "@/components/chat/ChatUserDialog";
 import Chats from "@/components/chat/Chats";
 import { getSocket } from "@/lib/socket.config";
 import { useQueryClient } from "@tanstack/react-query";
-import { ChatGroupType, GroupChatUserType, MessageType } from "../../../types";
+import { ChatGroupType, GroupChatUserType, MessageType } from "@/types";
 
 export default function ChatBase({
   group,

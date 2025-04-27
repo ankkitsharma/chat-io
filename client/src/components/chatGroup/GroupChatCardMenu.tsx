@@ -13,7 +13,7 @@ import EditGroupChat from "./EditGroupChat";
 import { toast } from "sonner";
 import Env from "@/lib/env";
 const DeleteChatGroup = dynamic(() => import("./DeleteChatGroup"));
-import { ChatGroupType } from "../../../types";
+import { ChatGroupType } from "@/types";
 
 export default function GroupChatCardMenu({
   group,
