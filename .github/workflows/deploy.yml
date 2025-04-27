@@ -10,20 +10,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the code from the repository
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: SSH and deploy
-        uses: appleboy/ssh-action@v0.1.7
-        with:
-          host: ${{ secrets.VPS_IP }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            cd ~/projects/chat-io
-            git pull origin main
-            docker-compose down
-            docker-compose build
-            docker-compose up -d
-            docker ps
+      # Set up SSH key and configure the known hosts for SSH
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -p 22 ${{ secrets.VPS_IP }} >> ~/.ssh/known_hosts
+
+      # Deploy to the VPS using SSH key authentication
+      - name: Deploy to VPS
+        run: |
+          ssh -v -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} <<'ENDSSH'
+          cd ~/projects/chat-io
+          git pull origin main
+          docker-compose down
+          docker-compose build
+          docker-compose up -d
+          docker ps
+          ENDSSH
