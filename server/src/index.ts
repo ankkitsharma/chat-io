@@ -21,7 +21,7 @@ interface SocketOptions {
 }
 const socketOptions: SocketOptions = {
   cors: {
-    origin: ["https://chat-io-cl.vercel.app", "http://localhost:3000"],
+    origin: ["http://digi.ankitsh.cc:3000", "http://localhost:3000"],
     credentials: true,
   },
 };
