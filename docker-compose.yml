@@ -5,8 +5,6 @@ services:
     ports:
       - "4000:4000"
     env_file: ./server/.env
-    networks:
-      - root_default
     restart: unless-stopped
 
   client:
