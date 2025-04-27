@@ -1,0 +1,17 @@
+# server/Dockerfile
+FROM oven/bun:1
+
+WORKDIR /app
+
+COPY package.json bun.lock ./
+COPY tsconfig.json ./
+COPY prisma ./prisma
+COPY public ./public
+COPY src ./src
+
+RUN bun install
+RUN bun run build
+
+EXPOSE 4000
+
+CMD ["bun", "run", "start"]
