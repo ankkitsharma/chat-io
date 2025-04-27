@@ -14,7 +14,4 @@ services:
     env_file: ./client/.env.local
     depends_on:
       - server
-    environment:
-      - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
-      - NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}
     restart: unless-stopped
