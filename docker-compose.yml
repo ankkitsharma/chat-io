@@ -5,6 +5,8 @@ services:
     ports:
       - "4000:4000"
     env_file: ./server/.env
+    networks:
+      - root_default
     restart: unless-stopped
 
   client:
@@ -21,4 +23,10 @@ services:
       - NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}
     depends_on:
       - server
+    networks:
+      - root_default
     restart: unless-stopped
+
+networks:
+  root_default:
+    external: true
