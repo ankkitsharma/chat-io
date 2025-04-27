@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up SSH and deploy to VPS
+      - name: SSH and deploy
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.VPS_IP }}
@@ -21,11 +21,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            ssh -v -i ~/.ssh/id_rsa_rsa ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} "
-              cd ~/projects/chat-io &&
-              git pull origin main &&
-              docker-compose down &&
-              docker-compose build &&
-              docker-compose up -d &&
-              docker ps
-            "
+            cd ~/projects/chat-io
+            git pull origin main
+            docker-compose down
+            docker-compose build
+            docker-compose up -d
+            docker ps
