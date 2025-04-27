@@ -21,9 +21,11 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd ~/projects/chat-io &&
-            git pull origin main &&
-            docker-compose down &&
-            docker-compose build &&
-            docker-compose up -d &&
-            docker ps
+            ssh -v -i ~/.ssh/id_rsa_rsa ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} "
+              cd ~/projects/chat-io &&
+              git pull origin main &&
+              docker-compose down &&
+              docker-compose build &&
+              docker-compose up -d &&
+              docker ps
+            "
