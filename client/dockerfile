@@ -1,6 +1,14 @@
 # client/Dockerfile
 FROM oven/bun:1
 
+# Set build arguments
+ARG NEXT_PUBLIC_APP_URL
+ARG NEXT_PUBLIC_BACKEND_URL
+
+# Set environment variables inside the container
+ENV NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
+ENV NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}
+
 WORKDIR /app
 
 COPY package.json bun.lock ./
