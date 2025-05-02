@@ -24,7 +24,7 @@ const socketOptions: SocketOptions = {
     origin: [
       "http://digi.ankitsh.cc:3000",
       "http://localhost:3000",
-      "https://chatio.ankitsh.cc",
+      "https://chat.ankitsh.cc",
     ],
     credentials: true,
   },
