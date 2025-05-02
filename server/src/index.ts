@@ -67,7 +67,7 @@ app.get("/", (_req: Request, res: Response) => {
 });
 
 // Routes
-app.use("/api", Routes);
+app.use("/apiv1", Routes);
 
 server.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
 
