@@ -5,7 +5,7 @@ This project is a scalable realtime chat application built using SockeIO, Redis,
 It leverages `socket.io` for real-time communication and `prisma` for database interactions and Redis for horizontal scaling.
 
 ## Hosted on
-[https://chat-io-cl.vercel.app/](https://chatio.ankitsh.cc/)
+https://chatio.ankitsh.cc/
 
 ## Built With
 - [Socket.IO](https://socket.io/): Socket.IO is a library that enables real-time, bidirectional, and event-based communication between the browser and the server.
